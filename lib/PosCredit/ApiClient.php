@@ -8,7 +8,7 @@ use PosCredit\Request\Status;
 /**
  * Клиент для работы с API PosCredit
  *
- * @author natalia
+ * @author Natali Maximenko <natali.maximenko@gmail.com>
  */
 class ApiClient {
     

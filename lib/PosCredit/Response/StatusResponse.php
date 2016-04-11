@@ -5,7 +5,7 @@ namespace PosCredit\Response;
 /**
  * Ответ PosCredit на запрос о статусе заявки
  *
- * @author natalia
+ * @author Natali Maximenko <natali.maximenko@gmail.com>
  */
 class StatusResponse extends ApiResponse {
     

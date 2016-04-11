@@ -11,7 +11,7 @@
 
 2) Run into your project directory:
 ```bash
-composer require nmaximenko/poscredit-api-client ~1.0.0
+composer require nmaximenko/poscredit-api-client dev-master
 ```
 
 If you have not used `composer` before, include autoloader into your project.

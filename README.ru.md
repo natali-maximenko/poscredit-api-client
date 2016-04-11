@@ -11,7 +11,7 @@
 
 2) Выполните в папке проекта:
 ```bash
-composer require nmaximenko/poscredit-api-client ~1.0.0
+composer require nmaximenko/poscredit-api-client dev-master
 ```
 
 В конфиг `composer.json` вашего проекта будет добавлена библиотека `nmaximenko/poscredit-api-client`, которая установится в папку `vendor/`. При отсутствии файла конфига или папки с вендорами они будут созданы.
