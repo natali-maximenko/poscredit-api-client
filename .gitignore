@@ -1,0 +1,11 @@
+/vendor
+/bin
+composer.lock
+composer.phar
+.idea
+.DS_Store
+.settings
+.buildpath
+.project
+.swp
+/nbproject

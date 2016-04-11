@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>API "короткая анкета" для интеграции с POSCredit</title>
+<style>
+* {
+font-family: Arial;
+}
+.logo {
+color: #000;
+font-size: 150%;
+}
+.intro {
+color: #000;
+font-size: 15px;
+}
+a.help { text-decoration:none; color:blue; border-bottom:dashed 1px #000; }
+a.help span { display:none;}
+a.help:hover { position:relative; }
+a.help:hover span { position:absolute; display:block; left:10px; top:-16px;
+border:solid 1px #000; background:#d0d0d0; color:#000; white-space:pre; padding:1px;}
+.menu span {
+margin: 0 15px;
+font-size: 14px;
+}
+.menu a {
+color: #2186E4;
+}
+h4 { text-align:center; }
+h3 { margin-top: 50px; font-size: 40px;}
+</style>
+</head>
+<body text="black" link="#a60000" alink="#a60000" vlink="#a60000">
+
+<table border=0 align="center" cellpadding=15 cellspacing=15 width=100%>
+	<td>
+		<a href="short.html"><img src="img/logo.png" border="0"></a><a name="up"></a>
+	</td>
+	<td align="right" class="menu">
+		<span><a href="#add">Сохранение заявки</a></span> 
+		<span><a href="#decision">Запрос решения по заявке</a></span> 
+	</td>
+</table>
+<br>
+
+
+<table style="background: rgb(231, 242, 253);" bgcolor="#f0f0f0" border=0 cellpadding=25 cellspacing=5 width=100%>
+	<td>
+		<span class="intro">
+		<span class="logo">Описание взаимодействия между POSCredit и партнером по схеме "Короткая анкета"</span>
+		<br><br>		
+		<b>Общее описание:</b> <br>
+		Межсистемный шлюз представляет из себя WEB сервер принимающий запросы.<br>
+		Каждый партнер, подключаемый к данной системе, должен получить уникальный Логин и Пароль и список сервисов, доступных ему для вызова.<br>
+		<br>
+		<b>Формат взаимодействия:</b> <br>
+		Запросы к серверу осуществляются по протоколу HTTP методом POST в формате XML.<br>
+		Ответ на запросы осуществляется в формате XML и кодировке utf-8.<br>
+		</span>
+	</td>
+</table>
+<br><br>
+
+
+<!-- xml запрос на сохранение заявки -->
+<center><h3><a name="add">Сохранение заявки на кредит</a></h3></center>
+
+<h4><a name="add">Отправка запроса</a></h4>
+<table bgcolor='#fff' cellpadding='10' cellspacing='0' border='1' bordercolor='#d0d0d0' align='left' width='100%'>
+<tr bgcolor='#fff' valign=top align=center>
+	<td><b>Название тега</b></td>
+	<td><b>Обязательность</b></td>
+	<td><b>Тип данных</b></td>
+	<td><b>Описание тега</b></td>
+	<td><b>Справочник или комментарий</b></td>
+</tr>
+<tr>
+	<td>target</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Целевая система</td>
+	<td>Всегда равно "API"</td>
+</tr>
+<tr>
+	<td>operation</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Тип запроса</td>
+	<td>Равно "SendShortOpty"</td> 
+</tr>
+<tr>
+	<td>userID</td>
+	<td>да</td>
+	<td>INT</td>
+	<td>Код партнера</td>
+	<td>Значения предоставляются по запросу</td> 
+</tr>
+<tr>
+	<td>userToken</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Хэш-пароль партнера</td>
+	<td>Значения предоставляются по запросу</td> 
+</tr>
+<tr>
+	<td>lastname</td>
+	<td>да</td></td>
+	<td>VARCHAR</td>
+	<td>Фамилия клиента</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>firstname</td>
+	<td>да</td></td>
+	<td>VARCHAR</td>
+	<td>Имя клиента</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>surname</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Отчество клиента</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>phone</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Номер мобильного телефона клиента</td>
+	<td>10 символов, пример: 9259876543</td> 
+</tr>
+<tr>
+	<td>comment</td>
+	<td></td>
+	<td>VARCHAR</td>
+	<td>Комментарий по заявке</td>
+	<td>Произвольный текст</td> 
+</tr>
+<tr>
+	<td>summ</td>
+	<td></td>
+	<td>FLOAT</td>
+	<td>Первоначальный взнос клиента</td>
+	<td></td> 
+</tr>
+<tr>
+	<td>request_id</td>
+	<td></td>
+	<td>VARCHAR</td>
+	<td>ID заявки на вашей стороне</td>
+	<td></td> 
+</tr>
+<tr>
+	<td>GoodsParam</td>
+	<td>да</td>
+	<td>&nbsp; &mdash;</td>
+	<td>Блок данных о приобретаемых товарах</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>[GoodsParam] Article</td>
+	<td>да</td>
+	<td>&nbsp; &mdash;</td>
+	<td>Блок  данных одного товара. </td>
+	<td>Обязательно должен быть хотя бы один тег Article</td> 
+</tr>
+<tr>
+	<td>[GoodsParam] [Article] good_name</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Название товара</td>
+	<td>Название товара в произвольной форме</td> 
+</tr>
+<tr>
+	<td>[GoodsParam] [Article] good_price</td>
+	<td>да</td>
+	<td>FLOAT</td>
+	<td>Стоимость</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>[GoodsParam] [Article] good_model</td>
+	<td></td>
+	<td>VARCHAR</td>
+	<td>Модель</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+<tr>
+	<td>[GoodsParam] [Article] good_brand</td>
+	<td></td>
+	<td>VARCHAR</td>
+	<td>Бренд</td>
+	<td>&nbsp; &mdash;</td> 
+</tr>
+
+
+</table>
+
+
+<!--Ответ Банка-->
+<br>
+<font color="#fff">.</font><br>
+<h4><a>Получение ответа</a></h4>
+
+<table bgcolor='#fff' cellpadding='10' cellspacing='0' border='1' bordercolor='#d0d0d0' align='left' width='100%'>
+<tr bgcolor='#fff' valign=top align=center>
+	<td><b>Имя поля</b></td>
+	<td><b>Тип данных</b></td>
+	<td><b>Комментарий</b></td>
+</tr>
+<tr>
+	<td>idProfile</td>
+	<td>INT</td>
+	<td>Идентификатор анкеты</td>
+</tr>
+<tr>
+	<td>error</td>
+	<td> &mdash; </td>
+	<td>Блок данных об ошибке. Этот тег не обязателен и может отсутствовать, если ошибок не возникло.</td>
+</tr>
+<tr>
+	<td>code</td>
+	<td>INT</td>
+	<td>Код ошибки.</td>
+</tr>
+<tr>
+	<td>description</td>
+	<td>VARCHAR</td>
+	<td>Текстовое описание ошибки. </td>
+</tr>
+</table>
+<font color="#fff">.<br></font>
+
+
+<!-- xml запрос на получение решения по заявке -->
+<center><h3><a name="decision">Получение решения по заявке</a></h3></center>
+
+<h4><a name="decision">Отправка запроса</a></h4>
+<table bgcolor='#fff' cellpadding='10' cellspacing='0' border='1' bordercolor='#d0d0d0' align='left' width='100%'>
+<tr bgcolor='#fff' valign=top align=center>
+	<td><b>Название тега</b></td>
+	<td><b>Обязательность</b></td>
+	<td><b>Тип данных</b></td>
+	<td><b>Описание тега</b></td>
+	<td><b>Справочник или комментарий</b></td>
+</tr>
+<tr>
+	<td>target</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Целевая система</td>
+	<td>Всегда равно "API"</td>
+</tr>
+<tr>
+	<td>operation</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Тип запроса</td>
+	<td>Равно "StatusShortOpty"</td> 
+</tr>
+<tr>
+	<td>userID</td>
+	<td>да</td>
+	<td>INT</td>
+	<td>Код партнера</td>
+	<td>Значения предоставляются по запросу</td> 
+</tr>
+<tr>
+	<td>userToken</td>
+	<td>да</td>
+	<td>VARCHAR</td>
+	<td>Хэш-пароль партнера</td>
+	<td>Значения предоставляются по запросу</td> 
+</tr>
+<tr>
+	<td>idProfile</td>
+	<td>да</td>
+	<td>INT</td>
+	<td>Идентификатор анкеты</td>
+	<td></td> 
+</tr>
+</table>
+
+<!--Ответ Банка-->
+<br>
+<font color="#fff">.</font><br>
+<h4><a>Получение ответа</a></h4>
+
+<table bgcolor='#fff' cellpadding='10' cellspacing='0' border='1' bordercolor='#d0d0d0' align='left' width='100%'>
+<tr bgcolor='#fff' valign=top align=center>
+	<td><b>Имя поля</b></td>
+	<td><b>Тип данных</b></td>
+	<td><b>Комментарий</b></td>
+</tr>
+<tr>
+	<td>idProfile</td>
+	<td>INT</td>
+	<td>Идентификатор анкеты</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>INT</td>
+	<td>Решение по заявке. 0 - новая заявка, 1 - в обработке, 2 - в кредите отказано, 3 - кредит предоставлен, 4 - ошибочный ввод, 5 - отказ клиента, 6 - договор авторизован, 7 - договор подписан</td>
+</tr>
+<tr>
+	<td>answer</td>
+	<td>VARCHAR</td>
+	<td>Комментарий при обработке заявки</td>
+</tr>
+<tr>
+	<td>bank</td>
+	<td>INT</td>
+	<td>Если status >= 3, то передается значение банка, в котором предоставлен кредит. 1 - ОТП БАНК, 2 - РЕНЕССАНС БАНК, 3 - РУСФИНАНС БАНК, 4 - РУССКИЙ СТАНДАРТ БАНК, 5 - Восточный Экспресс Банк, 6 - Альфа Банк, 7 - Лето Банк</td>
+</tr>
+<tr>
+	<td>dogovor</td>
+	<td>VARCHAR</td>
+	<td>Если status=3, то передается договор в формате Base64 в виде строки</td>
+</tr>
+<tr>
+	<td>sale</td>
+	<td>FLOAT</td>
+	<td>Процент скидки для клиента при рассрочке</td>
+</tr>
+<tr>
+	<td>firstPayment</td>
+	<td>FLOAT</td>
+	<td>Первоначальный взнос</td>
+</tr>
+<tr>
+	<td>dogNumber</td>
+	<td>VARCHAR</td>
+	<td>Номер банковского договора</td>
+</tr>
+<tr>
+	<td>creditSumm</td>
+	<td>FLOAT</td>
+	<td>Сумма кредита в рублях</td>
+</tr>
+<tr>
+	<td>creditTerms</td>
+	<td>INT</td>
+	<td>Срок кредита в месяцах</td>
+</tr>
+<tr>
+	<td>transferPayment</td>
+	<td></td>
+	<td>Блок данных по отправлению платежа за кредит от POS-Credit к Партнеру</td>
+</tr>
+<tr>
+	<td>[transferPayment] statusPayment</td>
+	<td>VARCHAR</td>
+	<td>Статуса перевода денег. Значения: approved (исполнен) / waiting (в ожидание) / bank (получите деньги от банка напрямую)</td>
+</tr>
+<tr>
+	<td>[transferPayment] datePayment</td>
+	<td>VARCHAR</td>
+	<td>Дата перевода платежа в формате dd.mm.yyyy</td>
+</tr>
+<tr>
+	<td>[transferPayment] numberPayment</td>
+	<td>INT</td>
+	<td>Номер платежного поручения</td>
+</tr>
+<tr>
+	<td>[transferPayment] codePayment</td>
+	<td>VARCHAR</td>
+	<td>Код проведения платежа</td>
+</tr>
+<tr>
+	<td>[transferPayment] amountPayment</td>
+	<td>FLOAT</td>
+	<td>Сумма кредита, которая была переведена Партнеру</td>
+</tr>
+<tr>
+	<td>error</td>
+	<td> &mdash; </td>
+	<td>Блок данных об ошибке. Этот тег не обязателен и может отсутствовать, если ошибок не возникло.</td>
+</tr>
+<tr>
+	<td>code</td>
+	<td>INT</td>
+	<td>Код ошибки.</td>
+</tr>
+<tr>
+	<td>description</td>
+	<td>VARCHAR</td>
+	<td>Текстовое описание ошибки. </td>
+</tr>
+</table>
+<font color="#fff">.<br></font>
+
+
+
+
+</body>
+</html>

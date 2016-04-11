@@ -1,0 +1,38 @@
+Пример запроса по операции "StatusShortOpty"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+    <body>
+        <target>API</target>
+        <operation>StatusShortOpty</operation>
+        <userID>Код партнера</userID>
+        <userToken>Хэш-пароль партнера</userToken>
+        <idProfile>ID_заявки_в_нашей_системе</idProfile>
+    </body>
+</envelope>
+
+
+Ответ с нашей стороны
+
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+   <body>
+        <idProfile>ID_заявки_в_нашей_системе</idProfile>
+        <status>6</status>
+        <answer>ДОБРЫЙ ДЕНЬ. КЛИЕНТУ ОДОБРИЛИ КРЕДИТ НА 12 МЕСЯЦЕВ БЕЗ ПЕРВОНАЧАЛЬНОГО ВЗНОСА.</answer>
+        <bank>2</bank>
+        <dogovor>JVBERi0xLjYKJfbk...NjUxNDg1CiUlRU9GCg==</dogovor>
+        <sale>0</sale>
+        <firstPayment>0</firstPayment>
+        <dogNumber>234753223423</dogNumber>
+        <creditSumm>14400</creditSumm>
+        <creditTerms>12</creditTerms>
+        <transferPayment>
+                        <statusPayment>approved</statusPayment>
+                        <datePayment>21.12.2015</datePayment>
+                        <numberPayment>74888</numberPayment>
+                        <codePayment>d6c1dc049f8e</codePayment>
+                        <amountPayment>14400</amountPayment>					
+        </transferPayment>
+   </body>
+</envelope>

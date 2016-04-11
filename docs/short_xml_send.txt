@@ -1,0 +1,36 @@
+Пример запроса по операции "SendShortOpty"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+   <body>
+        <target>API</target>
+        <operation>SendShortOpty</operation>
+        <userID>Код партнера</userID>
+        <userToken>Хэш-пароль партнера</userToken>
+        <lastname>Фамилия</lastname>
+        <firstname>Имя</firstname>
+        <surname>Отчество</surname>
+        <phone>9259876543</phone>
+        <comment>...</comment>
+        <summ>0.00</summ>
+        <request_id>3890192</request_id>
+        <GoodsParam>
+            <Article>
+                <good_name>Кофе-машина</good_name>
+                <good_price>26500.11</good_price>
+                <good_model>A100</good_model>
+                <good_brand>Nescafe</good_brand>
+            </Article>
+        </GoodsParam>
+   </body>
+</envelope>
+
+
+Ответ с нашей стороны
+
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+   <body>
+        <idProfile>ID_заявки_в_нашей_системе</idProfile>
+   </body>
+</envelope>
