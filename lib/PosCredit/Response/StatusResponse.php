@@ -75,6 +75,35 @@ class StatusResponse extends ApiResponse {
      * @var array 
      */
     public $transferPayment;
+    /**
+     * Статуса перевода денег. 
+     * Значения: 
+     *   approved (исполнен)
+     *   waiting (в ожидание)
+     *   bank (получите деньги от банка напрямую)
+     * @var string 
+     */
+    public $statusPayment;
+    /**
+     * Дата перевода платежа в формате dd.mm.yyyy
+     * @var string 
+     */
+    public $datePayment;
+    /**
+     * Номер платежного поручения
+     * @var int 
+     */
+    public $numberPayment;
+    /**
+     * Код проведения платежа
+     * @var string 
+     */
+    public $codePayment;
+    /**
+     * Сумма кредита, которая была переведена Партнеру
+     * @var float 
+     */
+    public $amountPayment;
     
     
     public function __construct(\SimpleXMLElement $response) {
@@ -86,19 +115,44 @@ class StatusResponse extends ApiResponse {
         $this->status = $body->status->__toString();
         $this->answer = $body->answer->__toString();
         $this->bank = $body->bank->__toString();
-        $this->dogovor = $body->dogovor->__toString();
         $this->sale = $body->sale->__toString();
         $this->firstPayment = $body->firstPayment->__toString();
         $this->dogNumber = $body->dogNumber->__toString();
         $this->creditSumm = $body->creditSumm->__toString();
         $this->creditTerms = $body->creditTerms->__toString();
         
+        if (!empty($body->dogovor)) {
+            $this->dogovor = $body->dogovor->__toString();
+        }
+        
         // если договор авторизован
         if ($this->status >= StatusResponse::STATUS_AUTHORIZED) {
             // заполняем данные о переводе денег
-            foreach ($body->transferPayment[0] as $param) {
-                $paramName = $param->getName();
-                $this->transferPayment[$paramName] = $param->__toString();
+            if (isset($body->transferPayment)) {
+                foreach ($body->transferPayment[0] as $param) {
+                    $paramName = $param->getName();
+                    $this->transferPayment[$paramName] = $param->__toString();
+                }
+            }
+            
+            if (isset($body->statusPayment)) {
+                $this->statusPayment = $body->statusPayment->__toString();
+            }
+            
+            if (isset($body->datePayment)) {
+                $this->datePayment = $body->datePayment->__toString();
+            }
+            
+            if (isset($body->numberPayment)) {
+                $this->numberPayment = $body->numberPayment->__toString();
+            }
+            
+            if (isset($body->codePayment)) {
+                $this->codePayment = $body->codePayment->__toString();
+            }
+            
+            if (isset($body->amountPayment)) {
+                $this->amountPayment = $body->amountPayment->__toString();
             }
         }
     }
