@@ -54,7 +54,7 @@ if ($response->isSuccessful()) {
         $data['credit_dognumber'] = $response->dogNumber;
         $data['credit_creditsumm'] = $response->creditSumm;
         $data['credit_creditterms'] = $response->creditTerms;
-        $data['credit_statuspayment'] = $response->transferPayment['statusPayment'];
+        $data['credit_statuspayment'] = $response->statusPayment;
 
         // информация по предоставленному кредиту
         print_r($data);
