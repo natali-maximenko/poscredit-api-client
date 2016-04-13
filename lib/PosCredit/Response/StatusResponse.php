@@ -73,37 +73,17 @@ class StatusResponse extends ApiResponse {
     /**
      * Блок данных по отправлению платежа за кредит от POS-Credit к Партнеру
      * @var array 
-     */
-    public $transferPayment;
-    /**
-     * Статуса перевода денег. 
-     * Значения: 
+     *  statusPayment - статуса перевода денег.
+     *  Значения: 
      *   approved (исполнен)
      *   waiting (в ожидание)
      *   bank (получите деньги от банка напрямую)
-     * @var string 
+     *  datePayment - дата перевода платежа в формате dd.mm.yyyy
+     *  numberPayment - номер платежного поручения
+     *  codePayment - код проведения платежа
+     *  amountPayment - cумма кредита, которая была переведена Партнеру
      */
-    public $statusPayment;
-    /**
-     * Дата перевода платежа в формате dd.mm.yyyy
-     * @var string 
-     */
-    public $datePayment;
-    /**
-     * Номер платежного поручения
-     * @var int 
-     */
-    public $numberPayment;
-    /**
-     * Код проведения платежа
-     * @var string 
-     */
-    public $codePayment;
-    /**
-     * Сумма кредита, которая была переведена Партнеру
-     * @var float 
-     */
-    public $amountPayment;
+    public $transferPayment;
     
     
     public function __construct(\SimpleXMLElement $response) {
@@ -133,26 +113,6 @@ class StatusResponse extends ApiResponse {
                     $paramName = $param->getName();
                     $this->transferPayment[$paramName] = $param->__toString();
                 }
-            }
-            
-            if (isset($body->statusPayment)) {
-                $this->statusPayment = $body->statusPayment->__toString();
-            }
-            
-            if (isset($body->datePayment)) {
-                $this->datePayment = $body->datePayment->__toString();
-            }
-            
-            if (isset($body->numberPayment)) {
-                $this->numberPayment = $body->numberPayment->__toString();
-            }
-            
-            if (isset($body->codePayment)) {
-                $this->codePayment = $body->codePayment->__toString();
-            }
-            
-            if (isset($body->amountPayment)) {
-                $this->amountPayment = $body->amountPayment->__toString();
             }
         }
     }

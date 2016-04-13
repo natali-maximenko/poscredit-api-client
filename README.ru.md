@@ -29,7 +29,7 @@ $client = new \PosCredit\ApiClient(
     'userID',
     'userToken'
 );
-$id = 15707;
+$id = 'pocsredit-request-id';
 
 try {
     $responseText = $client->getCreditStatus($id);
@@ -54,7 +54,17 @@ if ($response->isSuccessful()) {
         $data['credit_dognumber'] = $response->dogNumber;
         $data['credit_creditsumm'] = $response->creditSumm;
         $data['credit_creditterms'] = $response->creditTerms;
-        $data['credit_statuspayment'] = $response->statusPayment;
+
+        // если есть информация по отправлению платежа за кредит от POS-Credit к Партнеру
+        if (!empty($response->transferPayment)) {
+            if (!empty($response->transferPayment['datePayment'])) {
+                $data['credit_datepayment'] = $response->transferPayment['datePayment'];
+            }
+
+            if (!empty($response->transferPayment['statusPayment'])) {
+                $data['credit_statuspayment'] = $response->transferPayment['statusPayment'];
+            }
+        }
 
         // информация по предоставленному кредиту
         print_r($data);
