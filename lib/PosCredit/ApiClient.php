@@ -15,7 +15,7 @@ class ApiClient {
     /**
      * URL RestAPI
      */
-    const URL = 'http://tmapi.pos-credit.ru';
+    const URL = 'http://api.pos-credit.ru';
     /**
      * Методы
      */
