@@ -10,7 +10,7 @@ namespace PosCredit\Response;
 class StatusResponse extends ApiResponse {
     
     // Статусы решения по заявке. 
-    const STATUS_NEW = 0;
+    const STATUS_NEW = '0';
     const STATUS_IN_PROGRESS = 1;
     const STATUS_DENIED = 2;
     const STATUS_GRANTED = 3;
